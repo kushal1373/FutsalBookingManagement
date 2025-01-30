@@ -1,6 +1,10 @@
 const express=require("express");
 const router=express.Router();
 const { findAll, save, findById, deleteById, update} = require("../controller/GroundController");
+// const {authenticateToken,authorizeRole}= require("../security/Auth");
+const {authenticateToken}= require("../security/Auth");
+
+
 
 const multer=require("multer")
 const storage= multer.diskStorage({
@@ -13,11 +17,12 @@ const storage= multer.diskStorage({
 })
 const upload=multer({storage })
 
-router.get("/", findAll);
-router.post("/",upload.single('file'),save);
-router.get("/:id", findById)
-router.delete("/:id", deleteById)
-router.put("/:id", update)
+// router.get("/",authenticateToken,authorizeRole("Admin"),findAll); //edi admin lai matraw authorize dinu cha bhane esare authorizerole add garney auth ra ground dubai ma 
+router.get("/",findAll); 
+router.post("/",authenticateToken,upload.single('file'),save);
+router.get("/:id",authenticateToken, findById)
+router.delete("/:id",authenticateToken, deleteById)
+router.put("/:id", authenticateToken,update)
 
 
 
