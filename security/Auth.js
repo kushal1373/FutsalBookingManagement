@@ -12,7 +12,7 @@ function authenticateToken(req,res,next){
     req.user=verified;
     next()
     }catch (e){
-        res.status(400).sent("Invalid token")
+        res.status(400).send("Invalid token")
     }
 }
 
